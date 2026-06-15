@@ -4,13 +4,28 @@ const cors = require('cors');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/db');
+const seedData = require('./seed');
 
 const app = express();
 
-connectDB().catch((err) => {
-  console.error('Ошибка подключения к MongoDB:', err.message);
-  console.log('Сервер будет работать без БД');
-});
+// Автозапуск seed при старте (если база пустая)
+connectDB()
+  .then(async () => {
+    console.log('Проверка наличия данных...');
+    const User = require('./models/User');
+    const userCount = await User.countDocuments();
+    if (userCount === 0) {
+      console.log('База пустая — запускаю seed...');
+      await seedData();
+      console.log('Данные загружены!');
+    } else {
+      console.log('Данные уже есть — seed пропущен');
+    }
+  })
+  .catch((err) => {
+    console.error('Ошибка подключения к MongoDB:', err.message);
+    console.log('Сервер будет работать без БД');
+  });
 
 // Rate limiting
 const limiter = rateLimit({

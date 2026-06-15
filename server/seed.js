@@ -91,11 +91,18 @@ const seed = async () => {
     ]);
 
     console.log('Данные успешно загружены!');
-    process.exit();
+    return true;
   } catch (err) {
-    console.error(err);
-    process.exit(1);
+    console.error('Seed error:', err);
+    throw err;
   }
 };
 
-seed();
+// Если запускается напрямую (node seed.js)
+if (require.main === module) {
+  seed()
+    .then(() => process.exit(0))
+    .catch(() => process.exit(1));
+}
+
+module.exports = seed;
