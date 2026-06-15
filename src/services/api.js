@@ -1,4 +1,5 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// На production API на том же домене, локально — localhost
+const API_URL = import.meta.env.VITE_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api');
 const REQUEST_TIMEOUT_MS = 5000;
 
 const fetchWithTimeout = (url, options = {}) => {
