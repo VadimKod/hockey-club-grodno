@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: hockey-club-grodno
+    env: node
+    buildCommand: npm install && npm run build && cd server && npm install
+    startCommand: cd server && node index.js
+    envVars:
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: PORT
+        value: 10000

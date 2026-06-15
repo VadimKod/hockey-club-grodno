@@ -1,0 +1,33 @@
+.player-card {
+  background: linear-gradient(180deg, #ffffff 0%, #f1f6ff 100%);
+  border: 1px solid #d8e7ff;
+  padding: 19px;
+  border-radius: 14px;
+  card: 100%;
+  box-shadow: 0 8px 22px rgba(12, 46, 96, 0.12);
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.player-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(12, 46, 96, 0.2);
+}
+
+.player-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+  color: #0c2e71;
+  text-transform: uppercase;
+}
+
+.player-card p {
+  margin: 4px 0;
+  color: #2b4d85;
+  font-weight: 600;
+}
+
+.player-card p:first-of-type {
+  color: #094188;
+  font-size: 0.95rem;
+}
