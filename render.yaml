@@ -3,7 +3,7 @@ services:
     name: hockey-club-grodno
     env: node
     buildCommand: npm install && npm run build && cd server && npm install
-    startCommand: cd server && node index.js
+    startCommand: bash start.sh
     envVars:
       - key: MONGODB_URI
         sync: false
