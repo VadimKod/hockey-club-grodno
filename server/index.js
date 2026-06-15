@@ -14,13 +14,12 @@ connectDB().catch((err) => {
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 минут
-  max: 200, // 200 запросов с одного IP
+  windowMs: 15 * 60 * 1000,
+  max: 200,
   message: { message: 'Слишком много запросов. Попробуйте позже.' }
 });
 app.use(limiter);
 
-// Strict limit for auth
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
