@@ -1,4 +1,4 @@
-export const news = [
+﻿export const news = [
   {
     id: 1,
     title: 'Грандиозная победа в городском дерби',

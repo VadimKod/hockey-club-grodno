@@ -1,4 +1,4 @@
-export const standings = [
+﻿export const standings = [
   { id: 1, pos: 1, team: 'Медведи Витебск', gp: 48, w: 35, ot: 5, l: 8, gf: 168, ga: 98, pts: 110 },
   { id: 2, pos: 2, team: 'Ледокол Гродно', gp: 48, w: 32, ot: 6, l: 10, gf: 154, ga: 102, pts: 102 },
   { id: 3, pos: 3, team: 'Барсы Брест', gp: 48, w: 29, ot: 7, l: 12, gf: 141, ga: 115, pts: 93 },

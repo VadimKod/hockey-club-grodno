@@ -1,10 +1,8 @@
-const express = require('express');
+﻿const express = require('express');
 const News = require('../models/News');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
-
-// Middleware для проверки auth и admin
 const authAndAdmin = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
   if (!token) {
@@ -22,8 +20,6 @@ const authAndAdmin = (req, res, next) => {
     }
   });
 };
-
-// Получить все новости
 router.get('/', async (req, res) => {
   try {
     const news = await News.find().sort({ createdAt: -1 });
@@ -33,8 +29,6 @@ router.get('/', async (req, res) => {
     res.json([]);
   }
 });
-
-// Получить одну новость
 router.get('/:id', async (req, res) => {
   try {
     const item = await News.findById(req.params.id);
@@ -44,8 +38,6 @@ router.get('/:id', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Создать новость (admin)
 router.post('/', authAndAdmin, async (req, res) => {
   try {
     const item = await News.create(req.body);
@@ -54,8 +46,6 @@ router.post('/', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Обновить новость (admin)
 router.put('/:id', authAndAdmin, async (req, res) => {
   try {
     const item = await News.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -65,8 +55,6 @@ router.put('/:id', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Удалить новость (admin)
 router.delete('/:id', authAndAdmin, async (req, res) => {
   try {
     const item = await News.findByIdAndDelete(req.params.id);
@@ -76,5 +64,4 @@ router.delete('/:id', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 module.exports = router;

@@ -1,15 +1,13 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Calendar, Trophy, Home, Plane } from "lucide-react";
 import { api } from "../../services/api";
-
 function Schedule() {
   const navigate = useNavigate();
   const [matches, setMatches] = useState([]);
   const [nextMatch, setNextMatch] = useState(null);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     Promise.all([api.getMatches(), api.getNextMatch()])
       .then(([allMatches, next]) => {
@@ -19,7 +17,6 @@ function Schedule() {
       .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
-
   if (loading) {
     return (
       <div className="pt-24 pb-12 px-4 text-center">
@@ -27,7 +24,6 @@ function Schedule() {
       </div>
     );
   }
-
   return (
     <div className="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
@@ -44,8 +40,7 @@ function Schedule() {
             Следите за предстоящими играми и результатами команды.
           </p>
         </motion.div>
-
-        {/* Next match highlight */}
+        {}
         {nextMatch && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -85,8 +80,7 @@ function Schedule() {
             </div>
           </motion.div>
         )}
-
-        {/* Matches list */}
+        {}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -142,5 +136,4 @@ function Schedule() {
     </div>
   );
 }
-
 export default Schedule;

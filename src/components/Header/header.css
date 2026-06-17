@@ -1,4 +1,4 @@
-.header {
+﻿.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,7 +10,6 @@
   z-index: 20;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
-
 .header h2 {
   font-size: 1.5rem;
   letter-spacing: 0.08em;
@@ -18,7 +17,6 @@
   text-transform: uppercase;
   font-weight: 700;
 }
-
 .header nav {
   display: flex;
   gap: 12px;
@@ -26,7 +24,6 @@
   width: 60%;
   min-width: 380px;
 }
-
 .header nav a {
   color: #0f49a5;
   background: #ffffff;
@@ -40,34 +37,29 @@
   text-align: center;
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
-
 .header nav a.active {
   background: #dcedff;
   color: #063271;
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.95);
 }
-
 .header nav a:hover {
   background: #e7f1ff;
   color: #063271;
   text-decoration: none;
   transform: translateY(-1px);
 }
-
 @media (max-width: 768px) {
   .header {
     flex-wrap: wrap;
     gap: 10px;
     padding: 12px 20px;
   }
-
   .header nav {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
   }
-
   .header nav a {
     margin: 6px 8px;
   }

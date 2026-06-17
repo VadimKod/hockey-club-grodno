@@ -1,29 +1,44 @@
-const express = require('express');
+﻿const express = require('express');
 const { auth, isAdmin } = require('../middleware/auth');
 const { 
   sendTrainingScheduleNotification, 
   sendMatchScheduleNotification 
 } = require('../services/notificationService');
 const router = express.Router();
-
-// Отправить рассылку пользователям первого уровня (только админ)
 router.post('/training-schedule', auth, isAdmin, async (req, res) => {
   try {
+    console.log('📧 Отправка рассылки пользователям 1 уровня...');
     const result = await sendTrainingScheduleNotification();
-    res.json({ message: 'Рассылка отправлена', ...result });
+    console.log(`✅ Рассылка отправлена: ${result.sent}/${result.total}`);
+    res.json({ 
+      message: 'Рассылка отправлена', 
+      success: true,
+      ...result 
+    });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('❌ Ошибка рассылки:', err.message);
+    res.status(500).json({ 
+      message: err.message || 'Ошибка отправки рассылки',
+      success: false 
+    });
   }
 });
-
-// Отправить рассылку пользователям второго уровня (только админ)
 router.post('/match-schedule', auth, isAdmin, async (req, res) => {
   try {
+    console.log('📧 Отправка рассылки пользователям 2 уровня...');
     const result = await sendMatchScheduleNotification();
-    res.json({ message: 'Рассылка отправлена', ...result });
+    console.log(`✅ Рассылка отправлена: ${result.sent}/${result.total}`);
+    res.json({ 
+      message: 'Рассылка отправлена', 
+      success: true,
+      ...result 
+    });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('❌ Ошибка рассылки:', err.message);
+    res.status(500).json({ 
+      message: err.message || 'Ошибка отправки рассылки',
+      success: false 
+    });
   }
 });
-
 module.exports = router;

@@ -1,7 +1,6 @@
-import { Helmet } from "react-helmet-async";
+﻿import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import Gallery from "../../components/Gallery/Gallery";
-
 function GalleryPage() {
   return (
     <>
@@ -21,5 +20,4 @@ function GalleryPage() {
     </>
   );
 }
-
 export default GalleryPage;

@@ -1,10 +1,9 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Shield, Loader2 } from "lucide-react";
 import { api } from "../../services/api";
 import { players as localPlayers } from "../../data/players";
-
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -12,17 +11,14 @@ const container = {
     transition: { staggerChildren: 0.08 },
   },
 };
-
 const item = {
   hidden: { opacity: 0, y: 30, scale: 0.95 },
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5 } },
 };
-
 function TeamSection() {
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
   useEffect(() => {
     api.getPlayers()
       .then((data) => {
@@ -35,7 +31,6 @@ function TeamSection() {
       .catch(() => setPlayers(localPlayers))
       .finally(() => setLoading(false));
   }, []);
-
   if (loading) {
     return (
       <section id="team" className="py-24 px-4 text-center">
@@ -44,7 +39,6 @@ function TeamSection() {
       </section>
     );
   }
-
   return (
     <section id="team" className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -62,7 +56,6 @@ function TeamSection() {
             Наша <span className="text-gradient">команда</span>
           </h2>
         </motion.div>
-
         <motion.div
           variants={container}
           initial="hidden"
@@ -79,9 +72,13 @@ function TeamSection() {
               className="group glass rounded-2xl overflow-hidden cursor-pointer"
             >
               <div className="relative aspect-[3/4] bg-gradient-to-b from-brand-800 to-brand-950 overflow-hidden">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <Shield className="w-20 h-20 text-white/5" />
-                </div>
+                {p.image ? (
+                  <img src={p.image} alt={p.name} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Shield className="w-20 h-20 text-white/5" />
+                  </div>
+                )}
                 <div className="absolute top-4 right-4 w-12 h-12 rounded-xl bg-accent-500/90 flex items-center justify-center shadow-lg">
                   <span className="font-display text-xl font-bold text-white">
                     {p.number}
@@ -106,5 +103,4 @@ function TeamSection() {
     </section>
   );
 }
-
 export default TeamSection;

@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Menu, X, Ticket, LogIn, LogOut, Shield, User, Sun, Moon, Users } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
 import TicketModal from "../TicketModal/TicketModal";
-
 const navLinks = [
   { to: "/", label: "Главная" },
   { to: "/news", label: "Новости" },
@@ -15,7 +14,6 @@ const navLinks = [
   { to: "/gallery", label: "Галерея" },
   { to: "/about", label: "Контакты" },
 ];
-
 function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -23,13 +21,11 @@ function Header() {
   const { user, logout, isAdmin, isUserLevel1, isUserLevel2 } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
-
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -46,7 +42,6 @@ function Header() {
               ЛЕДОКОЛ ГРОДНО
             </span>
           </NavLink>
-
           <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <NavLink
@@ -64,7 +59,6 @@ function Header() {
               </NavLink>
             ))}
           </nav>
-
           <div className="hidden lg:flex items-center gap-3">
             <button
               onClick={toggleTheme}
@@ -117,7 +111,6 @@ function Header() {
               Купить билет
             </button>
           </div>
-
           <button
             className="lg:hidden p-2 text-white/90 hover:text-white"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -127,7 +120,6 @@ function Header() {
           </button>
         </div>
       </div>
-
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -210,5 +202,4 @@ function Header() {
     </header>
   );
 }
-
 export default Header;

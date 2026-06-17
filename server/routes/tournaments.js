@@ -1,10 +1,8 @@
-const express = require('express');
+﻿const express = require('express');
 const Tournament = require('../models/Tournament');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
-
-// Middleware для проверки auth и admin
 const authAndAdmin = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
   if (!token) {
@@ -22,7 +20,6 @@ const authAndAdmin = (req, res, next) => {
     }
   });
 };
-
 router.get('/', async (req, res) => {
   try {
     const tournaments = await Tournament.find().sort({ startDate: -1 });
@@ -32,7 +29,6 @@ router.get('/', async (req, res) => {
     res.json([]);
   }
 });
-
 router.get('/current', async (req, res) => {
   try {
     const tournament = await Tournament.findOne({ status: 'current' });
@@ -41,7 +37,6 @@ router.get('/current', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 router.post('/', authAndAdmin, async (req, res) => {
   try {
     const t = await Tournament.create(req.body);
@@ -50,7 +45,6 @@ router.post('/', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 router.put('/:id', authAndAdmin, async (req, res) => {
   try {
     const t = await Tournament.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -59,7 +53,6 @@ router.put('/:id', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 router.delete('/:id', authAndAdmin, async (req, res) => {
   try {
     await Tournament.findByIdAndDelete(req.params.id);
@@ -68,5 +61,4 @@ router.delete('/:id', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 module.exports = router;

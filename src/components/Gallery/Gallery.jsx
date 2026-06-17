@@ -1,18 +1,15 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { galleryImages } from "../../data/gallery";
-
 function Gallery() {
   const [lightbox, setLightbox] = useState(null);
-
   const open = (idx) => setLightbox(idx);
   const close = () => setLightbox(null);
   const prev = () =>
     setLightbox((i) => (i === 0 ? galleryImages.length - 1 : i - 1));
   const next = () =>
     setLightbox((i) => (i === galleryImages.length - 1 ? 0 : i + 1));
-
   return (
     <section id="gallery" className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -30,7 +27,6 @@ function Gallery() {
             Лучшие <span className="text-gradient">моменты</span>
           </h2>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -62,7 +58,6 @@ function Gallery() {
           ))}
         </motion.div>
       </div>
-
       <AnimatePresence>
         {lightbox !== null && (
           <motion.div
@@ -78,7 +73,6 @@ function Gallery() {
             >
               <X className="w-8 h-8" />
             </button>
-
             <button
               className="absolute left-4 sm:left-8 p-3 rounded-full glass text-white/70 hover:text-white transition-colors"
               onClick={(e) => {
@@ -88,7 +82,6 @@ function Gallery() {
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
-
             <motion.img
               key={lightbox}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -100,7 +93,6 @@ function Gallery() {
               className="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             />
-
             <button
               className="absolute right-4 sm:right-8 p-3 rounded-full glass text-white/70 hover:text-white transition-colors"
               onClick={(e) => {
@@ -116,5 +108,4 @@ function Gallery() {
     </section>
   );
 }
-
 export default Gallery;

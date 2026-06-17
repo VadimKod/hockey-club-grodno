@@ -1,31 +1,30 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Ticket, Calendar, MapPin, Clock, Armchair } from "lucide-react";
 import { api } from "../../services/api";
 import toast from "react-hot-toast";
-
 const SEATS = [
   { section: "A", rows: ["1-5", "6-10", "11-15"], price: 20 },
   { section: "B", rows: ["1-5", "6-10", "11-15"], price: 15 },
   { section: "C", rows: ["1-5", "6-10", "11-15"], price: 10 },
 ];
-
 function TicketModal({ isOpen, onClose }) {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({ name: "", phone: "", email: "", count: 1, seat: "" });
   const [selectedSection, setSelectedSection] = useState(null);
   const [selectedRow, setSelectedRow] = useState("");
-
   const handleSeatSelect = (section, row) => {
     setSelectedSection(section);
     setSelectedRow(row);
     setForm({ ...form, seat: `${section.section}, ряд ${row}` });
   };
-
   const total = form.count * (selectedSection?.price || 15);
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!selectedSection || !selectedRow) {
+      toast.error('Пожалуйста, выберите сектор и ряд');
+      return;
+    }
     try {
       await api.createTicket({ ...form, total });
       setStep(2);
@@ -37,10 +36,9 @@ function TicketModal({ isOpen, onClose }) {
         onClose();
       }, 3000);
     } catch (err) {
-      toast.error(err.message);
+      toast.error(err.message || 'Ошибка при заказе билета');
     }
   };
-
   return (
     <AnimatePresence>
       {isOpen && (
@@ -62,7 +60,6 @@ function TicketModal({ isOpen, onClose }) {
             <button onClick={onClose} className="absolute top-4 right-4 p-2 text-white/50 hover:text-white transition-colors">
               <X className="w-5 h-5" />
             </button>
-
             {step === 1 ? (
               <>
                 <div className="flex items-center gap-3 mb-6">
@@ -74,13 +71,11 @@ function TicketModal({ isOpen, onClose }) {
                     <p className="text-white/50 text-sm">Ледокол Гродно — следующий матч</p>
                   </div>
                 </div>
-
                 <div className="bg-white/5 rounded-xl p-4 mb-6 space-y-2">
                   <div className="flex items-center gap-2 text-white/70 text-sm"><Calendar className="w-4 h-4 text-accent-400" /><span>22 марта 2026</span></div>
                   <div className="flex items-center gap-2 text-white/70 text-sm"><Clock className="w-4 h-4 text-accent-400" /><span>19:30</span></div>
                   <div className="flex items-center gap-2 text-white/70 text-sm"><MapPin className="w-4 h-4 text-accent-400" /><span>Ледовый дворец Гродно</span></div>
                 </div>
-
                 <div className="mb-6">
                   <h3 className="text-sm font-semibold text-white mb-3 flex items-center gap-2"><Armchair className="w-4 h-4 text-accent-400" /> Выберите сектор</h3>
                   <div className="grid grid-cols-3 gap-2">
@@ -109,7 +104,6 @@ function TicketModal({ isOpen, onClose }) {
                     </div>
                   )}
                 </div>
-
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <input type="text" placeholder="Ваше имя" required className="w-full p-3 rounded-xl bg-brand-950 border border-white/10 text-white placeholder-white/30 focus:border-accent-500 outline-none" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} />
                   <input type="tel" placeholder="Телефон" required className="w-full p-3 rounded-xl bg-brand-950 border border-white/10 text-white placeholder-white/30 focus:border-accent-500 outline-none" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} />
@@ -144,5 +138,4 @@ function TicketModal({ isOpen, onClose }) {
     </AnimatePresence>
   );
 }
-
 export default TicketModal;

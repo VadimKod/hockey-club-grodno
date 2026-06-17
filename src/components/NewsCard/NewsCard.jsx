@@ -1,5 +1,4 @@
-import React from 'react';
-
+﻿import React from 'react';
 function NewsCard({ newsItem }) {
   return (
     <div className="news-card">
@@ -9,5 +8,4 @@ function NewsCard({ newsItem }) {
     </div>
   );
 }
-
 export default NewsCard;

@@ -1,12 +1,10 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Instagram, Youtube, Send, Bell } from "lucide-react";
 import { api } from "../../services/api";
 import toast from "react-hot-toast";
-
 function Footer() {
   const [email, setEmail] = useState("");
-
   const handleSubscribe = async (e) => {
     e.preventDefault();
     if (!email.trim()) return;
@@ -18,12 +16,11 @@ function Footer() {
       toast.error(err.message || "Ошибка подписки");
     }
   };
-
   return (
     <footer className="relative bg-brand-950 border-t border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand */}
+          {}
           <div className="lg:col-span-1">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-500 to-accent-600 flex items-center justify-center shadow-lg">
@@ -49,8 +46,7 @@ function Footer() {
               </a>
             </div>
           </div>
-
-          {/* Navigation */}
+          {}
           <div>
             <h4 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-6">
               Навигация
@@ -64,8 +60,7 @@ function Footer() {
               <Link to="/about" className="text-white/50 hover:text-white text-sm transition-colors">О клубе</Link>
             </nav>
           </div>
-
-          {/* Contacts */}
+          {}
           <div>
             <h4 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-6">
               Контакты
@@ -85,8 +80,7 @@ function Footer() {
               </div>
             </div>
           </div>
-
-          {/* Subscribe */}
+          {}
           <div>
             <h4 className="font-display text-sm font-bold text-white uppercase tracking-wider mb-6">
               Подписка
@@ -105,7 +99,6 @@ function Footer() {
                 <Bell className="w-5 h-5" />
               </button>
             </form>
-
             <h4 className="font-display text-sm font-bold text-white uppercase tracking-wider mt-6 mb-4">
               Карта
             </h4>
@@ -119,7 +112,6 @@ function Footer() {
             </div>
           </div>
         </div>
-
         <div className="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-white/30 text-sm">© 2026 ХК «Ледокол Гродно». Все права защищены.</p>
           <p className="text-white/30 text-sm">Сделано в Беларуси 🇧🇾</p>
@@ -128,5 +120,4 @@ function Footer() {
     </footer>
   );
 }
-
 export default Footer;

@@ -1,7 +1,6 @@
-import { Helmet } from "react-helmet-async";
+﻿import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import TeamSection from "../../components/TeamSection/TeamSection";
-
 function Team() {
   return (
     <>
@@ -21,5 +20,4 @@ function Team() {
     </>
   );
 }
-
 export default Team;

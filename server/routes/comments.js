@@ -1,8 +1,7 @@
-const express = require('express');
+﻿const express = require('express');
 const Comment = require('../models/Comment');
 const { auth } = require('../middleware/auth');
 const router = express.Router();
-
 router.get('/news/:newsId', async (req, res) => {
   try {
     const comments = await Comment.find({ newsId: req.params.newsId })
@@ -13,7 +12,6 @@ router.get('/news/:newsId', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 router.post('/', auth, async (req, res) => {
   try {
     const { newsId, text } = req.body;
@@ -28,7 +26,6 @@ router.post('/', auth, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 router.delete('/:id', auth, async (req, res) => {
   try {
     const comment = await Comment.findById(req.params.id);
@@ -42,5 +39,4 @@ router.delete('/:id', auth, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 module.exports = router;

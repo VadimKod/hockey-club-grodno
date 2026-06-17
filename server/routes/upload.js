@@ -1,10 +1,8 @@
-const express = require('express');
+﻿const express = require('express');
 const upload = require('../middleware/upload');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
-
-// Middleware для проверки auth и admin
 const authAndAdmin = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
   if (!token) {
@@ -22,11 +20,9 @@ const authAndAdmin = (req, res, next) => {
     }
   });
 };
-
 router.post('/', authAndAdmin, upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ message: 'Файл не загружен' });
   const url = `/uploads/${req.file.filename}`;
   res.json({ url });
 });
-
 module.exports = router;

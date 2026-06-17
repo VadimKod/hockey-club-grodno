@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+﻿import { Helmet } from "react-helmet-async";
 import Hero from "../../components/Hero/Hero";
 import NextMatch from "../../components/NextMatch/NextMatch";
 import NewsSection from "../../components/NewsSection/NewsSection";
@@ -6,7 +6,6 @@ import Standings from "../../components/Standings/Standings";
 import TeamSection from "../../components/TeamSection/TeamSection";
 import Gallery from "../../components/Gallery/Gallery";
 import Shop from "../../components/Shop/Shop";
-
 function Home() {
   return (
     <>
@@ -28,5 +27,4 @@ function Home() {
     </>
   );
 }
-
 export default Home;

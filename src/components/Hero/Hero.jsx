@@ -1,10 +1,9 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import { ChevronRight, Newspaper } from "lucide-react";
-
 function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Image */}
+      {}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
@@ -15,11 +14,9 @@ function Hero() {
         <div className="absolute inset-0 bg-gradient-to-b from-brand-950/80 via-brand-950/60 to-brand-950" />
         <div className="absolute inset-0 bg-gradient-to-r from-brand-950/90 via-transparent to-brand-950/90" />
       </div>
-
-      {/* Animated glow */}
+      {}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-500/10 rounded-full blur-[120px] animate-pulse-slow" />
-
-      {/* Content */}
+      {}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -30,7 +27,6 @@ function Hero() {
             Сезон 2025/2026
           </span>
         </motion.div>
-
         <motion.h1
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -41,7 +37,6 @@ function Hero() {
           <br />
           <span className="text-white">любительский хоккей</span>
         </motion.h1>
-
         <motion.p
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -51,7 +46,6 @@ function Hero() {
           Играем для души, бьёмся за город. Присоединяйтесь к болельщикам
           и переживайте каждый матч вместе с нами.
         </motion.p>
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -74,11 +68,9 @@ function Hero() {
           </a>
         </motion.div>
       </div>
-
-      {/* Bottom fade */}
+      {}
       <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-brand-950 to-transparent" />
     </section>
   );
 }
-
 export default Hero;

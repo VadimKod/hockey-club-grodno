@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Calendar, ArrowLeft, MessageCircle, Send, Trash2 } from "lucide-react";
@@ -7,7 +7,11 @@ import { api } from "../../services/api";
 import { news as localNews } from "../../data/news";
 import { useAuth } from "../../context/AuthContext";
 import toast from "react-hot-toast";
-
+const getImageUrl = (url) => {
+  if (!url) return null;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return window.location.hostname === 'localhost' ? `http://localhost:5000${url}` : url;
+};
 export default function NewsDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -16,17 +20,17 @@ export default function NewsDetail() {
   const [comments, setComments] = useState([]);
   const [commentText, setCommentText] = useState("");
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     api.getNewsItem(id)
       .then((item) => {
-        setNews(item);
+        const newsItem = { ...item, image: getImageUrl(item.image) };
+        setNews(newsItem);
         api.getComments(id).then(setComments).catch(() => setComments([]));
       })
       .catch(() => {
         const item = localNews.find((n) => String(n.id) === id || String(n._id) === id);
         if (item) {
-          setNews({ ...item, _id: item._id || String(item.id) });
+          setNews({ ...item, _id: item._id || String(item.id), image: getImageUrl(item.image) });
           setComments([]);
         } else {
           navigate("/news");
@@ -34,7 +38,6 @@ export default function NewsDetail() {
       })
       .finally(() => setLoading(false));
   }, [id, navigate]);
-
   const handleAddComment = async (e) => {
     e.preventDefault();
     if (!user) return toast.error("Войдите, чтобы оставить комментарий");
@@ -48,7 +51,6 @@ export default function NewsDetail() {
       toast.error(err.message);
     }
   };
-
   const handleDeleteComment = async (commentId) => {
     if (!confirm("Удалить комментарий?")) return;
     try {
@@ -59,10 +61,8 @@ export default function NewsDetail() {
       toast.error(err.message);
     }
   };
-
   if (loading) return <div className="text-center pt-32 text-white/50">Загрузка...</div>;
   if (!news) return null;
-
   return (
     <>
       <Helmet>
@@ -77,7 +77,6 @@ export default function NewsDetail() {
           >
             <ArrowLeft className="w-4 h-4" /> Назад к новостям
           </button>
-
           <motion.article
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -93,24 +92,20 @@ export default function NewsDetail() {
               <Calendar className="w-4 h-4" />
               {news.date}
             </div>
-
             {news.image && (
               <img src={news.image} alt={news.title} className="w-full rounded-2xl mb-8 object-cover max-h-96" />
             )}
-
             <div className="prose prose-invert max-w-none text-white/70 leading-relaxed mb-12">
               <p className="text-lg">{news.excerpt}</p>
               {news.content && <p className="mt-4">{news.content}</p>}
             </div>
           </motion.article>
-
-          {/* Comments */}
+          {}
           <div className="border-t border-white/10 pt-8">
             <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
               <MessageCircle className="w-5 h-5" />
               Комментарии ({comments.length})
             </h3>
-
             <form onSubmit={handleAddComment} className="flex gap-3 mb-8">
               <input
                 type="text"
@@ -128,7 +123,6 @@ export default function NewsDetail() {
                 <Send className="w-5 h-5" />
               </button>
             </form>
-
             <div className="space-y-4">
               {comments.map((c) => (
                 <div key={c._id} className="bg-brand-900/50 rounded-xl p-4">

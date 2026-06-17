@@ -1,17 +1,15 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { LogIn, UserPlus, Shield } from 'lucide-react';
 import toast from 'react-hot-toast';
-
 export default function Login() {
   const [isRegister, setIsRegister] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', password: '' });
   const [loading, setLoading] = useState(false);
   const { login, register } = useAuth();
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -30,7 +28,6 @@ export default function Login() {
       setLoading(false);
     }
   };
-
   return (
     <>
       <Helmet>
@@ -49,7 +46,6 @@ export default function Login() {
               {isRegister ? 'Присоединяйтесь к сообществу болельщиков' : 'Войдите для доступа к профилю'}
             </p>
           </div>
-
           <form onSubmit={handleSubmit} className="space-y-4">
             {isRegister && (
               <input
@@ -91,7 +87,6 @@ export default function Login() {
               )}
             </button>
           </form>
-
           <p className="mt-6 text-center text-sm text-white/40">
             {isRegister ? 'Уже есть аккаунт?' : 'Нет аккаунта?'}{' '}
             <button

@@ -1,14 +1,12 @@
-import { Helmet } from "react-helmet-async";
+﻿import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import { Target, Users, Award, Heart } from "lucide-react";
-
 const values = [
   { icon: Target, title: "Амбиции", desc: "Стремимся к высшим местам в каждом турнире и непрерывно развиваемся." },
   { icon: Users, title: "Команда", desc: "Верим в силу единства и взаимоподдержки на льду и за его пределами." },
   { icon: Award, title: "Традиции", desc: "Уважаем историю клуба и создаём новые легенды с каждым сезоном." },
   { icon: Heart, title: "Сообщество", desc: "Наши болельщики — главная сила. Вместе мы непобедимы." },
 ];
-
 function About() {
   return (
     <>
@@ -24,7 +22,6 @@ function About() {
               ХК «Ледокол Гродно» — любительский хоккейный клуб из Гродно. Команда энтузиастов, объединённых любовью к хоккею.
             </p>
           </motion.div>
-
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-20">
             <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} className="relative rounded-2xl overflow-hidden aspect-video">
               <img src="https://images.unsplash.com/photo-1515703407324-5f753afd8be8?w=800&h=450&fit=crop" alt="Команда на льду" className="w-full h-full object-cover" />
@@ -40,7 +37,6 @@ function About() {
               </p>
             </motion.div>
           </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((v, i) => (
               <motion.div key={v.title} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 + i * 0.1 }} className="glass rounded-2xl p-6 hover:border-white/10 transition-all">
@@ -57,5 +53,4 @@ function About() {
     </>
   );
 }
-
 export default About;

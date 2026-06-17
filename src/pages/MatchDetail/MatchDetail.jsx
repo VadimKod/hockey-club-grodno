@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowLeft, Trophy, Calendar, MapPin, Clock } from "lucide-react";
@@ -6,7 +6,6 @@ import { Helmet } from "react-helmet-async";
 import { api } from "../../services/api";
 import { useAuth } from "../../context/AuthContext";
 import toast from "react-hot-toast";
-
 export default function MatchDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -15,7 +14,6 @@ export default function MatchDetail() {
   const [votes, setVotes] = useState([]);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     api.getMatches()
       .then((matches) => {
@@ -28,7 +26,6 @@ export default function MatchDetail() {
       .catch(() => navigate("/"))
       .finally(() => setLoading(false));
   }, [id, navigate]);
-
   const handleVote = async (playerId) => {
     if (!user) return toast.error("Войдите, чтобы голосовать");
     try {
@@ -39,13 +36,10 @@ export default function MatchDetail() {
       toast.error(err.message);
     }
   };
-
   const getVoteCount = (pid) => votes.find((v) => v._id === pid)?.count || 0;
   const totalVotes = votes.reduce((a, v) => a + v.count, 0);
-
   if (loading) return <div className="text-center pt-32 text-white/50">Загрузка...</div>;
   if (!match) return null;
-
   return (
     <>
       <Helmet>
@@ -60,7 +54,6 @@ export default function MatchDetail() {
           >
             <ArrowLeft className="w-4 h-4" /> Назад
           </button>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -81,15 +74,13 @@ export default function MatchDetail() {
                   <p className="text-white font-bold mt-2">{match.awayTeam || match.opponent}</p>
                 </div>
               </div>
-
               <div className="flex flex-wrap justify-center gap-4 text-white/50 text-sm">
                 <span className="flex items-center gap-1"><Calendar className="w-4 h-4 text-accent-400" /> {match.date}</span>
                 {match.time && <span className="flex items-center gap-1"><Clock className="w-4 h-4 text-accent-400" /> {match.time}</span>}
                 {match.arena && <span className="flex items-center gap-1"><MapPin className="w-4 h-4 text-accent-400" /> {match.arena}</span>}
               </div>
             </div>
-
-            {/* Voting */}
+            {}
             <div className="p-8 border-t border-white/5">
               <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
                 <Trophy className="w-5 h-5 text-accent-400" />

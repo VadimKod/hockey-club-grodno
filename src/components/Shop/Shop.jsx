@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
+﻿import { motion } from "framer-motion";
 import { ShoppingCart, ArrowRight } from "lucide-react";
 import { products } from "../../data/shop";
-
+import toast from "react-hot-toast";
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -9,13 +9,14 @@ const container = {
     transition: { staggerChildren: 0.1 },
   },
 };
-
 const item = {
   hidden: { opacity: 0, y: 30 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
-
 function Shop() {
+  const addToCart = (product) => {
+    toast.success(`${product.name} добавлен в корзину!`);
+  };
   return (
     <section id="shop" className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -42,7 +43,6 @@ function Shop() {
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </motion.div>
-
         <motion.div
           variants={container}
           initial="hidden"
@@ -92,7 +92,10 @@ function Shop() {
                   <span className="font-display text-xl font-bold text-white">
                     {p.price} BYN
                   </span>
-                  <button className="p-2.5 rounded-xl bg-white/5 hover:bg-accent-500 text-white hover:text-white transition-all duration-200">
+                  <button 
+                    onClick={() => addToCart(p)}
+                    className="p-2.5 rounded-xl bg-white/5 hover:bg-accent-500 text-white hover:text-white transition-all duration-200"
+                  >
                     <ShoppingCart className="w-5 h-5" />
                   </button>
                 </div>
@@ -104,5 +107,4 @@ function Shop() {
     </section>
   );
 }
-
 export default Shop;

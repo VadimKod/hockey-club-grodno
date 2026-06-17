@@ -1,4 +1,4 @@
-export const players = [
+﻿export const players = [
   { id: 1, name: "Алексей Воронов", number: 31, position: "Вратарь", stats: "Сухих матчей: 12" },
   { id: 2, name: "Дмитрий Соколов", number: 77, position: "Защитник", stats: "Голы: 8, Передачи: 24" },
   { id: 3, name: "Игорь Кузнецов", number: 44, position: "Защитник", stats: "Голы: 5, Передачи: 18" },

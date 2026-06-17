@@ -1,5 +1,4 @@
-import React from 'react';
-
+﻿import React from 'react';
 function MatchCard({ match }) {
   return (
     <div>
@@ -9,5 +8,4 @@ function MatchCard({ match }) {
     </div>
   );
 }
-
 export default MatchCard;

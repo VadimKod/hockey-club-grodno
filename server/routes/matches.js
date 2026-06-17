@@ -1,10 +1,8 @@
-const express = require('express');
+﻿const express = require('express');
 const Match = require('../models/Match');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
-
-// Получить все матчи
 router.get('/', async (req, res) => {
   try {
     const matches = await Match.find().sort({ createdAt: -1 });
@@ -13,8 +11,6 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Получить следующий матч
 router.get('/next', async (req, res) => {
   try {
     const next = await Match.findOne({ isNext: true });
@@ -23,8 +19,6 @@ router.get('/next', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Middleware для проверки auth и admin
 const authAndAdmin = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
   if (!token) {
@@ -42,8 +36,6 @@ const authAndAdmin = (req, res, next) => {
     }
   });
 };
-
-// Создать матч (admin)
 router.post('/', authAndAdmin, async (req, res) => {
   try {
     const match = await Match.create(req.body);
@@ -52,8 +44,6 @@ router.post('/', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Обновить матч (admin)
 router.put('/:id', authAndAdmin, async (req, res) => {
   try {
     const match = await Match.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -63,8 +53,6 @@ router.put('/:id', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Удалить матч (admin)
 router.delete('/:id', authAndAdmin, async (req, res) => {
   try {
     const match = await Match.findByIdAndDelete(req.params.id);
@@ -74,5 +62,4 @@ router.delete('/:id', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 module.exports = router;

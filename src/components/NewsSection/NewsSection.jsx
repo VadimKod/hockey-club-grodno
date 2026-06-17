@@ -1,16 +1,20 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ArrowRight, Calendar } from "lucide-react";
 import { api } from "../../services/api";
 import { news as localNews } from "../../data/news";
-
+const getImageUrl = (url) => {
+  if (!url) return null;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return window.location.hostname === 'localhost' ? `http://localhost:5000${url}` : url;
+};
 const normalizeNews = (items) =>
   items.map((item) => ({
     ...item,
     _id: item._id || String(item.id),
+    image: getImageUrl(item.image),
   }));
-
 const container = {
   hidden: { opacity: 0 },
   show: {
@@ -18,16 +22,13 @@ const container = {
     transition: { staggerChildren: 0.1 },
   },
 };
-
 const item = {
   hidden: { opacity: 0, y: 30 },
   show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
-
 function NewsSection() {
   const [news, setNews] = useState([]);
   const navigate = useNavigate();
-
   useEffect(() => {
     api.getNews()
       .then((data) => {
@@ -36,7 +37,6 @@ function NewsSection() {
       })
       .catch(() => setNews(normalizeNews(localNews)));
   }, []);
-
   return (
     <section id="news" className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -63,7 +63,6 @@ function NewsSection() {
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </a>
         </motion.div>
-
         <motion.div
           variants={container}
           initial="hidden"
@@ -71,7 +70,9 @@ function NewsSection() {
           viewport={{ once: true, margin: "-100px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
         >
-          {news.map((n) => (
+          {news.map((n) => {
+            const imageUrl = getImageUrl(n.image);
+            return (
             <motion.article
               key={n._id || n.id}
               variants={item}
@@ -79,6 +80,11 @@ function NewsSection() {
               className="group relative glass rounded-2xl overflow-hidden hover:border-white/10 transition-all duration-300 cursor-pointer"
             >
               <div className="aspect-[16/10] bg-gradient-to-br from-brand-800 to-brand-900 relative overflow-hidden">
+                {imageUrl ? (
+                  <img src={imageUrl} alt={n.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                ) : (
+                  <div className="absolute inset-0 bg-gradient-to-br from-brand-800 to-brand-900" />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-brand-950/80 to-transparent" />
                 <div className="absolute top-4 left-4">
                   <span className="px-3 py-1 rounded-full bg-accent-500/90 text-white text-xs font-semibold">
@@ -99,11 +105,11 @@ function NewsSection() {
                 </p>
               </div>
             </motion.article>
-          ))}
+          );
+          })}
         </motion.div>
       </div>
     </section>
   );
 }
-
 export default NewsSection;

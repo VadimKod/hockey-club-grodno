@@ -1,5 +1,4 @@
-const mongoose = require('mongoose');
-
+﻿const mongoose = require('mongoose');
 const standingSchema = new mongoose.Schema({
   pos: { type: Number, required: true },
   team: { type: String, required: true },
@@ -11,5 +10,4 @@ const standingSchema = new mongoose.Schema({
   ga: { type: Number, default: 0 },
   pts: { type: Number, default: 0 }
 }, { timestamps: true });
-
 module.exports = mongoose.model('Standing', standingSchema);

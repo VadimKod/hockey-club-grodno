@@ -1,26 +1,22 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Trophy, Calendar, Award } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { api } from "../../services/api";
-
 export default function Tournaments() {
   const [tournaments, setTournaments] = useState([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     api.getTournaments()
       .then(setTournaments)
       .catch(() => setTournaments([]))
       .finally(() => setLoading(false));
   }, []);
-
   const statusLabel = (s) => {
     if (s === 'current') return { text: 'Текущий', color: 'bg-green-500/20 text-green-400' };
     if (s === 'finished') return { text: 'Завершён', color: 'bg-white/5 text-white/40' };
     return { text: 'Предстоит', color: 'bg-accent-500/20 text-accent-400' };
   };
-
   return (
     <>
       <Helmet>
@@ -39,7 +35,6 @@ export default function Tournaments() {
               Турниры и <span className="text-gradient">сезоны</span>
             </h1>
           </motion.div>
-
           <div className="space-y-4">
             {loading ? (
               <p className="text-white/40 text-center py-8">Загрузка...</p>

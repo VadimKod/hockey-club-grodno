@@ -1,8 +1,7 @@
-function Matches() {
+﻿function Matches() {
   return (
     <div>
       <h2>Ближайшие матчи</h2>
-
       <div className="match">
         Hockey Club vs Tigers
         <br />
@@ -11,5 +10,4 @@ function Matches() {
     </div>
   );
 }
-
 export default Matches;

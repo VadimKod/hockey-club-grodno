@@ -1,10 +1,8 @@
-const express = require('express');
+﻿const express = require('express');
 const Subscriber = require('../models/Subscriber');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
-
-// Middleware для проверки auth и admin
 const authAndAdmin = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
   if (!token) {
@@ -22,7 +20,6 @@ const authAndAdmin = (req, res, next) => {
     }
   });
 };
-
 router.post('/', async (req, res) => {
   try {
     const { email } = req.body;
@@ -34,15 +31,12 @@ router.post('/', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 router.get('/', authAndAdmin, async (req, res) => {
   const subs = await Subscriber.find().sort({ createdAt: -1 });
   res.json(subs);
 });
-
 router.delete('/:id', authAndAdmin, async (req, res) => {
   await Subscriber.findByIdAndDelete(req.params.id);
   res.json({ message: 'Удалено' });
 });
-
 module.exports = router;

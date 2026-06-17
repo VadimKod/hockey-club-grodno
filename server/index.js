@@ -1,14 +1,11 @@
-require('dotenv').config();
+﻿require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const rateLimit = require('express-rate-limit');
 const connectDB = require('./config/db');
 const seedData = require('./seed');
-
 const app = express();
-
-// Автозапуск seed при старте (если база пустая)
 connectDB()
   .then(async () => {
     console.log('Проверка наличия данных...');
@@ -26,25 +23,20 @@ connectDB()
     console.error('Ошибка подключения к MongoDB:', err.message);
     console.log('Сервер будет работать без БД');
   });
-
-// Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 200,
   message: { message: 'Слишком много запросов. Попробуйте позже.' }
 });
 app.use(limiter);
-
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 10,
+  max: process.env.NODE_ENV === 'development' ? 100 : 20,
   message: { message: 'Слишком много попыток входа. Попробуйте через 15 минут.' }
 });
-
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 app.use('/api/auth', authLimiter, require('./routes/auth'));
 app.use('/api/matches', require('./routes/matches'));
 app.use('/api/news', require('./routes/news'));
@@ -58,8 +50,6 @@ app.use('/api/votes', require('./routes/votes'));
 app.use('/api/tickets', require('./routes/tickets'));
 app.use('/api/tournaments', require('./routes/tournaments'));
 app.use('/api/notifications', require('./routes/notifications'));
-
-// В production раздаём собранный фронтенд
 const frontendDist = path.join(__dirname, '..', 'dist');
 app.use(express.static(frontendDist));
 app.get('*', (req, res) => {
@@ -67,6 +57,5 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(frontendDist, 'index.html'));
   }
 });
-
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Сервер запущен на порту ${PORT}`));

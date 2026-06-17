@@ -1,10 +1,8 @@
-const express = require('express');
+﻿const express = require('express');
 const Standing = require('../models/Standing');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
-
-// Middleware для проверки auth и admin
 const authAndAdmin = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
   if (!token) {
@@ -22,8 +20,6 @@ const authAndAdmin = (req, res, next) => {
     }
   });
 };
-
-// Получить турнирную таблицу
 router.get('/', async (req, res) => {
   try {
     const standings = await Standing.find().sort({ pos: 1 });
@@ -32,8 +28,6 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Создать запись (admin)
 router.post('/', authAndAdmin, async (req, res) => {
   try {
     const item = await Standing.create(req.body);
@@ -42,8 +36,6 @@ router.post('/', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Обновить запись (admin)
 router.put('/:id', authAndAdmin, async (req, res) => {
   try {
     const item = await Standing.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -53,8 +45,6 @@ router.put('/:id', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Удалить запись (admin)
 router.delete('/:id', authAndAdmin, async (req, res) => {
   try {
     const item = await Standing.findByIdAndDelete(req.params.id);
@@ -64,5 +54,4 @@ router.delete('/:id', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 module.exports = router;

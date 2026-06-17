@@ -1,10 +1,8 @@
-const express = require('express');
+﻿const express = require('express');
 const Gallery = require('../models/Gallery');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
-
-// Middleware для проверки auth и admin
 const authAndAdmin = (req, res, next) => {
   const token = req.header('Authorization')?.replace('Bearer ', '');
   if (!token) {
@@ -22,8 +20,6 @@ const authAndAdmin = (req, res, next) => {
     }
   });
 };
-
-// Получить все фото
 router.get('/', async (req, res) => {
   try {
     const items = await Gallery.find().sort({ createdAt: -1 });
@@ -32,8 +28,6 @@ router.get('/', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Создать (admin)
 router.post('/', authAndAdmin, async (req, res) => {
   try {
     const item = await Gallery.create(req.body);
@@ -42,8 +36,6 @@ router.post('/', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
-// Удалить (admin)
 router.delete('/:id', authAndAdmin, async (req, res) => {
   try {
     const item = await Gallery.findByIdAndDelete(req.params.id);
@@ -53,5 +45,4 @@ router.delete('/:id', authAndAdmin, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 module.exports = router;

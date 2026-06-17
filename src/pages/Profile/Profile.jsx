@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { User, Ticket, LogOut, Bell, Users, Shield } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { useAuth } from "../../context/AuthContext";
 import { api } from "../../services/api";
-
 export default function Profile() {
   const { user, logout, isUserLevel1, isUserLevel2, isAdmin, updateNotifications } = useAuth();
   const navigate = useNavigate();
@@ -16,7 +15,6 @@ export default function Profile() {
     ticketUpdates: true
   });
   const [saving, setSaving] = useState(false);
-
   useEffect(() => {
     if (!user) {
       navigate("/login");
@@ -27,9 +25,7 @@ export default function Profile() {
       setNotifications(user.notifications);
     }
   }, [user, navigate]);
-
   if (!user) return null;
-
   const handleNotificationChange = async (key) => {
     const newValue = !notifications[key];
     setNotifications(prev => ({ ...prev, [key]: newValue }));
@@ -42,17 +38,14 @@ export default function Profile() {
       setSaving(false);
     }
   };
-
   const getRoleBadge = () => {
     if (isAdmin) return { bg: 'bg-accent-500/20', text: 'text-accent-400', label: 'Администратор', icon: Shield };
     if (isUserLevel1) return { bg: 'bg-green-500/20', text: 'text-green-400', label: 'Пользователь 1 уровня', icon: Users };
     if (isUserLevel2) return { bg: 'bg-blue-500/20', text: 'text-blue-400', label: 'Пользователь 2 уровня', icon: Users };
     return { bg: 'bg-white/5', text: 'text-white/40', label: 'Гость', icon: User };
   };
-
   const roleBadge = getRoleBadge();
   const RoleIcon = roleBadge.icon;
-
   return (
     <>
       <Helmet>
@@ -88,15 +81,14 @@ export default function Profile() {
                 </button>
               </div>
             </div>
-
-            {/* Настройки уведомлений */}
+            {}
             <div className="glass rounded-2xl p-8 mb-8">
               <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                 <Bell className="w-5 h-5 text-accent-400" />
                 Уведомления
               </h2>
               <div className="space-y-4">
-                {/* Для пользователей первого уровня */}
+                {}
                 {isUserLevel1 && (
                   <div className="flex items-center justify-between bg-brand-950 rounded-xl p-4">
                     <div>
@@ -116,8 +108,7 @@ export default function Profile() {
                     </button>
                   </div>
                 )}
-                
-                {/* Для всех авторизованных */}
+                {}
                 {user && (
                   <div className="flex items-center justify-between bg-brand-950 rounded-xl p-4">
                     <div>
@@ -137,8 +128,7 @@ export default function Profile() {
                     </button>
                   </div>
                 )}
-
-                {/* Только для пользователей второго уровня */}
+                {}
                 {isUserLevel2 && (
                   <div className="flex items-center justify-between bg-brand-950 rounded-xl p-4">
                     <div>
@@ -160,7 +150,6 @@ export default function Profile() {
                 )}
               </div>
             </div>
-
             <div className="glass rounded-2xl p-8">
               <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
                 <Ticket className="w-5 h-5 text-accent-400" />

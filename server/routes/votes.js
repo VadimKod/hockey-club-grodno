@@ -1,8 +1,7 @@
-const express = require('express');
+﻿const express = require('express');
 const Vote = require('../models/Vote');
 const { auth } = require('../middleware/auth');
 const router = express.Router();
-
 router.get('/match/:matchId', async (req, res) => {
   try {
     const votes = await Vote.aggregate([
@@ -15,7 +14,6 @@ router.get('/match/:matchId', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 router.post('/', auth, async (req, res) => {
   try {
     const { matchId, playerId } = req.body;
@@ -27,5 +25,4 @@ router.post('/', auth, async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
-
 module.exports = router;

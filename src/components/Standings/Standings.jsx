@@ -1,18 +1,15 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Trophy } from "lucide-react";
 import { api } from "../../services/api";
 import { standings as localStandings } from "../../data/standings";
-
 const normalizeStandings = (items) =>
   items.map((item) => ({
     ...item,
     _id: item._id || String(item.id ?? item.pos),
   }));
-
 function Standings() {
   const [standings, setStandings] = useState([]);
-
   useEffect(() => {
     api.getStandings()
       .then((data) => {
@@ -21,7 +18,6 @@ function Standings() {
       })
       .catch(() => setStandings(normalizeStandings(localStandings)));
   }, []);
-
   return (
     <section className="py-24 px-4 sm:px-6 lg:px-8">
       <div className="max-w-6xl mx-auto">
@@ -39,7 +35,6 @@ function Standings() {
             Турнирная <span className="text-gradient">таблица</span>
           </h2>
         </motion.div>
-
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -145,5 +140,4 @@ function Standings() {
     </section>
   );
 }
-
 export default Standings;

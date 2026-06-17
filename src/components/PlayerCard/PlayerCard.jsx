@@ -1,5 +1,4 @@
-import "./playercard.css";
-
+﻿import "./playercard.css";
 function PlayerCard({ player }) {
   return (
     <div className="player-card">
@@ -9,5 +8,4 @@ function PlayerCard({ player }) {
     </div>
   );
 }
-
 export default PlayerCard;
